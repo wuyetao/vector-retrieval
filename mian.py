@@ -11,11 +11,11 @@ if __name__ == '__main__':
         'password': '19941126'
     }
 
+    # 阿里云 大模型 api-key
+    api_key = "sk-xxxxxxxx"
 
     # 创建系统实例
-    system = MultimodalVectorSystem(db_config)
-
-
+    system = MultimodalVectorSystem(db_config, api_key)
 
     # 图片相似性搜索
     # search_embedding = system.get_multimodal_embedding("https://res.klook.com/image/upload/fl_lossy.progressive,q_60/cities/votenvae9mlactjurilc.jpg")

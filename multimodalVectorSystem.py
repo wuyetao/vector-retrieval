@@ -13,7 +13,8 @@ from dashscope.embeddings.multimodal_embedding import (
 
 class MultimodalVectorSystem:
     def __init__(self,
-                 db_config: Dict[str, str]):
+                 db_config: Dict[str, str],
+                 api_key: str):
         """
         初始化多模态向量系统
 
@@ -24,6 +25,7 @@ class MultimodalVectorSystem:
         self.db_config = db_config
         self.db_conn = None
         self.connect_db()
+        self.api_key = api_key
 
     def connect_db(self):
         """连接数据库"""
@@ -56,7 +58,7 @@ class MultimodalVectorSystem:
             resp = dashscope.MultiModalEmbedding.call(
                 model="multimodal-embedding-v1",
                 input=data,
-                api_key="sk-9eaf454af0e8452b89ef29205c8ecab7"
+                api_key=self.api_key
             )
 
             if resp.status_code == HTTPStatus.OK:
@@ -152,6 +154,7 @@ class MultimodalVectorSystem:
             return []
 
 if __name__ == '__main__':
+
     # 配置信息
     db_config = {
         'host': 'localhost',
@@ -161,16 +164,11 @@ if __name__ == '__main__':
         'password': '19941126'
     }
 
+    # 阿里云 大模型 api-key
+    api_key = "sk-xxxx"
 
     # 创建系统实例
-    system = MultimodalVectorSystem(db_config)
-
-    # 示例1: 插入文本数据
-    # text_id = system.insert_data(
-    #     "image",
-    #     "https://cn.technode.com/wp-content/blogs.dir/18/files/2020/03/%E6%9D%AD%E5%B7%9E%E4%B8%8B%E5%9F%8E%E5%8C%BA-uai-1200x675.jpg",
-    #     {'category': '景点', 'tags': ['杭州', '城市']}
-    # )
+    system = MultimodalVectorSystem(db_config, api_key)
 
     # 搜索
     # # search_embedding = system.get_multimodal_embedding("https://res.klook.com/image/upload/fl_lossy.progressive,q_60/cities/votenvae9mlactjurilc.jpg")
